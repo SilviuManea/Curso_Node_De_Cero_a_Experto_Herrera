@@ -17,14 +17,25 @@ const deadpool = {
 // const poder = deadpool.poder;
 
 // Destructurar dentro de la función
-function imprimeHeroe(heroe) {
+function imprimeHeroe(nombre, apellido, poder, edad = 0) {
 
     // Sacar los valores usando destructuración
-    const { nombre, apellido, poder, edad = 0 } = deadpool;
+    nombre = 'Silviu';
     console.log(nombre, apellido, poder, edad);
-
 }
-imprimeHeroe(deadpool);
+// ImprimeHeroe(deadpool);
+
+const heroes = ['Deadpool', 'Superman', 'Batman'];
+
+// Extraer y crear variables de un array de forma manual
+// const h1 = heroes[0];
+// const h2 = heroes[1];
+// const h3 = heroes[2];
+
+// Extraer y crear variables de un array usando destructuración
+const [h1, h2, h3] = heroes;
+
+console.log(h1, h2, h3);
 
 
 
