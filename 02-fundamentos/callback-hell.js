@@ -47,3 +47,33 @@ getEmpleado(3, (err, empleado) => {
     }
 
 })
+
+// Id del salario
+const id = 4;
+
+// GetSalario
+const getSalario = (id, callback) => {
+
+    //buscamos el salario por id
+    const salario = salarios.find(s => s.id === id)?.salario;
+
+    if (salario) {
+        callback(null, salario)
+    } else {
+        console.log(`El salario con id ${id} NO EXISTE!`)
+    }
+}
+
+
+getSalario(id, (err, salario) => {
+
+    //imprimir el error o el salario
+    if (err) {
+        console.log('ERROR!')
+        return console.log(err);
+    } else {
+        console.log('El salario EXISTE!')
+        console.log(salario);
+    }
+
+})
