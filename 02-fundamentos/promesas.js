@@ -24,7 +24,7 @@ const salarios = [
     },
 ]
 
-const id = 1;
+const id = 3;
 
 const getEmpleado = (id) => {
 
@@ -54,10 +54,23 @@ const getSalario = (id) => {
 
 }
 
-getEmpleado(id)
-    .then(empleado => console.log(empleado))
-    .catch(err => console.log(err));
+// getEmpleado(id)
+//     .then(empleado => console.log(empleado))
+//     .catch(err => console.log(err));
 
-getSalario(id)
-    .then(salario => console.log(salario))
-    .catch(err => console.log(err));
+// getSalario(id)
+//     .then(salario => console.log(salario))
+//     .catch(err => console.log(err));
+
+// PROMESAS EN CADENA - Lanzar la petición del empleado y si existe entonces lanzar la petición del salario
+
+getEmpleado(id)
+    .then(empleado => {
+
+        getSalario(id)
+            .then(salario => {
+                console.log('El empleado', empleado.nombre, 'tiene un salario de ', salario.salario);
+            })
+            .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
