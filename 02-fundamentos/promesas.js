@@ -24,20 +24,40 @@ const salarios = [
     },
 ]
 
+const id = 1;
+
 const getEmpleado = (id) => {
 
     //el callback resolve se llamará cuando devuelva un resultado y el reject cuando ocurra un error
     return new Promise((resolve, reject) => {
         //cuerpo de la promesa busca un empleado por id
-        const empleado = empleados.find(e => e.id === id)
+        const empleado = empleados.find(e => e.id === id);
 
-            (empleado)
+        (empleado)
             ? resolve(empleado)
             : reject(`No existe empleado con id ${id}`);
 
     });
 }
-const id = 8;
+
+//Tarea - hacer la función getSalario usando promesas
+
+const getSalario = (id) => {
+
+    return new Promise((resolve, reject) => {
+
+        const salario = salarios.find(s => s.id === id);//fundamental poner este punto y coma, o dará error
+        (salario)
+            ? resolve(salario)
+            : reject(`No existe salario con id ${id}`);
+    });
+
+}
+
 getEmpleado(id)
     .then(empleado => console.log(empleado))
+    .catch(err => console.log(err));
+
+getSalario(id)
+    .then(salario => console.log(salario))
     .catch(err => console.log(err));
