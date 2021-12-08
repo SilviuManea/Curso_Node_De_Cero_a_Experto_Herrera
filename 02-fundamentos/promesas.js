@@ -24,7 +24,7 @@ const salarios = [
     },
 ]
 
-const id = 3;
+const id = 1;
 
 const getEmpleado = (id) => {
 
@@ -62,9 +62,9 @@ const getSalario = (id) => {
 //     .then(salario => console.log(salario))
 //     .catch(err => console.log(err));
 
-// PROMESAS EN CADENA - Lanzar la petición del empleado y si existe entonces lanzar la petición del salario
+// PROMESAS EN CADENA(no hacer esto) - Lanzar la petición del empleado y si existe entonces lanzar la petición del salario
 
-getEmpleado(id)
+/* getEmpleado(id)
     .then(empleado => {
 
         getSalario(id)
@@ -73,4 +73,16 @@ getEmpleado(id)
             })
             .catch(err => console.log(err))
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err)) */
+
+// PROMESAS  EN CADENA (la manera correcta) - > la idea es encadenar la segunda promesa con el return
+
+let nombre;
+
+getEmpleado(id)
+    .then(empleado => {//Primera Promesa
+        nombre = empleado.nombre;
+        return getSalario(id)
+    })
+    .then(salario => console.log('El empleado:', nombre, 'tiene una salario de:', salario.salario))
+    .catch(err => console.log(err));
