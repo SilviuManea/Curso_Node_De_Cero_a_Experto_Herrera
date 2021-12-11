@@ -1,6 +1,7 @@
+const { error } = require('console');
 const fs = require('fs');
 
-const crearArchivo = (base = 5) => { // si no nos pasan una base por defecto se le va a asignar el 5
+const crearArchivo = async (base = 5) => { // si no nos pasan una base por defecto se le va a asignar el 5
     console.clear();
     console.log('===================')
     console.log('   Tabla del:', base)
@@ -12,10 +13,14 @@ const crearArchivo = (base = 5) => { // si no nos pasan una base por defecto se 
         salida += (`${base} x ${i}\n`);
     }
 
-    fs.writeFileSync(`tabla-${base}.txt`, salida);
+    try {
+        fs.writeFileSync(`tabla-${base}.txt`, salida);
+        //Ejercicio - devolver ek nombre del archivo si se hizo correctamente
+        return (`tabla-${base}.txt`);
+    } catch (error) {
+        throw error;
+    }
 
-    console.log(salida);
-    console.log(`tabla-${base}.txt` + ' creada');
 }
 
 module.exports = {
