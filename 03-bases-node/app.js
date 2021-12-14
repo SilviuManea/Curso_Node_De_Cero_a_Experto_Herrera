@@ -1,12 +1,29 @@
 const { crearArchivo } = require("./helpers/multiplicar");
+const argv = require('yargs')
+    .option('b', {
+        alias: 'base',
+        type: 'number', // tirará NaN si no es un número pero seguirá.
+        demandOption: true
+    }).
+    check((argv, options) => {//validación adicional para que no siga.
+        //console.log('yargs', argv)
+        if (isNaN(argv.b)) {
+            throw 'La base tiene que ser un número'
+        }
+        return true;//si no hay ningún error
+    })
+    .argv;
+
+//Ejercicio:
+//option('l')
+//listar
+//boolean
 
 
 console.clear();
 
-//Destructuración de un array -> guarda cada elemento del array en una constante
-const [, , arg3 = 'base=5'] = process.argv; // los primeros dos elementos no nos interesan, y si no nos dan ningun valor le ponemos 5 por defecto
-const [, base] = arg3.split('='); // separamos el string por el = y nos quedamos con el segundo argumento(el número)
-//console.log(base);
+//console.log(process.argv);
+console.log(argv);
 
 //crearArchivo(base);
 crearArchivo(base)
