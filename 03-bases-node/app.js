@@ -4,8 +4,14 @@ const argv = require('yargs')
         alias: 'base',
         type: 'number', // tirará NaN si no es un número pero seguirá.
         demandOption: true
-    }).
-    check((argv, options) => {//validación adicional para que no siga.
+    })
+    .option('l', {
+        alias: 'listar',
+        type: 'boolean',
+        demandOption: false,
+        default: false
+    })
+    .check((argv, options) => {//validación adicional para que no siga.
         //console.log('yargs', argv)
         if (isNaN(argv.b)) {
             throw 'La base tiene que ser un número'
@@ -14,18 +20,12 @@ const argv = require('yargs')
     })
     .argv;
 
-//Ejercicio:
-//option('l')
-//listar
-//boolean
-
-
-console.clear();
+//console.clear();
 
 //console.log(process.argv);
-console.log(argv);
+//console.log(argv.listar);
 
 //crearArchivo(base);
-crearArchivo(base)
+crearArchivo(argv.base, argv.listar)
     .then(nombreArchivo => console.log(nombreArchivo, ' creado'))
     .catch(err => console.log(err));
