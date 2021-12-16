@@ -25,7 +25,7 @@ const crearArchivo = async (base = 5, listar = false, hasta = 10) => {
       console.log(consola);
     }
 
-    fs.writeFileSync(`tabla-${base}.txt`, salida);
+    fs.writeFileSync(`./salida/tabla-${base}.txt`, salida);
     //Ejercicio - devolver ek nombre del archivo si se hizo correctamente
     return `tabla-${base}.txt`;
   } catch (error) {
