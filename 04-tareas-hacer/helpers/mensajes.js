@@ -13,8 +13,18 @@ const mostrarMenu = () => {
   console.log(`${'5.'.green} Completar tarea(s)`);
   console.log(`${'6.'.green} Borrar tarea`);
   console.log(`${'0.'.green} Salir \n`);
-};
 
+  //Preparamos la interfaz del usuario.
+  const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  readline.question('Seleccione una opción:', (opt) => {
+    console.log({ opt });
+    readline.close();
+  });
+};
 //exportamos el módulo para usarlo desde fuera.
 module.exports = {
   mostrarMenu,
