@@ -1,4 +1,4 @@
-const { inquireMenu } = require('./helpers/inquirer');
+const { inquireMenu, pausa } = require('./helpers/inquirer');
 
 const main = async () => {
   //console.log('Hola Mundo');
@@ -7,6 +7,8 @@ const main = async () => {
   do {
     opt = await inquireMenu();
     console.log({ opt });
+
+    await pausa();
   } while (opt !== '0');
 };
 
