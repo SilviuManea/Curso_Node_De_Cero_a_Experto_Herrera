@@ -68,8 +68,28 @@ const pausa = async () => {
   await inquirer.prompt(question);
 };
 
+const leerImput = async (message) => {
+  const question = [
+    {
+      type: 'input',
+      name: 'desc',
+      message,
+      validate(value) {
+        if (value.length === 0) {
+          return 'Por favor ingrese un valor';
+        }
+        return true;
+      },
+    },
+  ];
+  // {desc} es lo que vamos a guardar en esta variable(porque ya conocemos que tiene una propiedad desc.)
+  const { desc } = await inquirer.prompt(question);
+  return desc;
+};
+
 module.exports = {
   inquireMenu,
   //exportamos la nueva función para que podamos acceder a ella desde otra clase
   pausa,
+  leerImput,
 };

@@ -1,21 +1,30 @@
-const { inquireMenu, pausa } = require('./helpers/inquirer');
+const {
+  inquireMenu,
+  pausa,
+  leerImput,
+} = require('./helpers/inquirer');
 const Tarea = require('./models/tarea');
 const Tareas = require('./models/tareas');
 
 const main = async () => {
   //console.log('Hola Mundo');
   let opt = '';
-
+  //INSTANCIAMOS EL MODELO
+  const tareas = new Tareas();
   do {
-    //opt = await inquireMenu();
-    //console.log({ opt });
-    const tareas = new Tareas();
-    const tarea = new Tarea('Comprar comida');
-
-    //Guardamos en el listado como un objeto con el id de la tarea y una propiedad que es el propio objeto tarea
-    tareas._listado[tarea.id] = tarea;
-    console.log(tareas);
-
+    opt = await inquireMenu();
+    switch (opt) {
+      case '1':
+        //Crear tarea
+        const desc = await leerImput('Descripción:');
+        //console.log(desc);
+        tareas.crearTarea(desc);
+        break;
+      case '2':
+        //Listar tareas
+        console.log(tareas._listado);
+        break;
+    }
     await pausa();
   } while (opt !== '0');
 };
