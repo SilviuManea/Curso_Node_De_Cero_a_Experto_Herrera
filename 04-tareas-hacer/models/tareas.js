@@ -9,6 +9,20 @@ class Tareas {
   //ojo tareas en plural
   _listado = {};
 
+  get listadoArr() {
+    const listado = [];
+    //Recorremos las llaves del objeto
+    Object.keys(this._listado).forEach((key) => {
+      //console.log(key);
+      //extraemos la tarea para cada llave
+      const tarea = this._listado[key];
+      //llenamos el listado con las tareas
+      listado.push(tarea);
+    });
+    //devolvemos el listado
+    return listado;
+  }
+
   constructor() {
     this._listado = {};
   }
