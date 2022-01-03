@@ -1,3 +1,4 @@
+const { guardarDB } = require('./db/guardarArchivo');
 const {
   inquireMenu,
   pausa,
@@ -25,6 +26,8 @@ const main = async () => {
         console.log(tareas.listadoArr);
         break;
     }
+    //guardamos la información en la bd
+    guardarDB(tareas.listadoArr);
     await pausa();
   } while (opt !== '0');
 };
