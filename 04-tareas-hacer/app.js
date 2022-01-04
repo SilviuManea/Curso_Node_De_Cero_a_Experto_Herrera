@@ -1,4 +1,4 @@
-const { guardarDB } = require('./db/guardarArchivo');
+const { guardarDB, leerDB } = require('./db/guardarArchivo');
 const {
   inquireMenu,
   pausa,
@@ -12,6 +12,13 @@ const main = async () => {
   let opt = '';
   //INSTANCIAMOS EL MODELO
   const tareas = new Tareas();
+  //Leemos desde la BD
+  const tareasDB = leerDB();
+  if (tareasDB) {
+    //establecer las tareas
+  }
+  await pausa();
+
   do {
     opt = await inquireMenu();
     switch (opt) {
