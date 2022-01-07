@@ -37,6 +37,12 @@ class Tareas {
     const tarea = new Tarea(desc);
     this._listado[tarea.id] = tarea;
   }
+
+  listadoCompleto() {
+    //Ejercicio - El numero tarea En verde o rojo si está completada o no
+    //Formato   - 1. Desc tarea :: Completada | Pendiente
+    //2.
+  }
 }
 
 module.exports = Tareas;

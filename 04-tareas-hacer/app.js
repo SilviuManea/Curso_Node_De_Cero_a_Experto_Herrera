@@ -30,7 +30,7 @@ const main = async () => {
         break;
       case '2':
         //Listar tareas
-        console.log(tareas.listadoArr);
+        tareas.listadoCompleto();
         break;
     }
     //guardamos la información en la bd
