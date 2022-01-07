@@ -1,5 +1,6 @@
 const Tarea = require('./tarea');
 
+require('colors');
 /**
  * //Ejemplo de como vamos a manejar las tareas
  * _listado:
@@ -38,10 +39,33 @@ class Tareas {
     this._listado[tarea.id] = tarea;
   }
 
-  listadoCompleto() {
+  listadoCompleto(tareasArr = []) {
+    let tareasCount = 0;
+    //let _listadoCompleto = {};
+    let nrTarea = 1;
+
+    tareasCount = tareasArr.length;
+    //console.log(tareasCount);
+
+    tareasArr.forEach((Tarea) => {
+      //Comprobamos si la tarea se ha completado o no (mirando el campo completadoEn)
+      if (Tarea.completadoEn == null) {
+        console.log(
+          `${nrTarea}`.red + '.' + `${Tarea.desc}` + ` :: Pendiente`,
+        );
+      } else {
+        console.log(
+          `${nrTarea}`.green +
+            '.' +
+            `${Tarea.desc}` +
+            ` :: Completada`,
+        );
+      }
+
+      nrTarea++;
+    });
     //Ejercicio - El numero tarea En verde o rojo si está completada o no
     //Formato   - 1. Desc tarea :: Completada | Pendiente
-    //2.
   }
 }
 

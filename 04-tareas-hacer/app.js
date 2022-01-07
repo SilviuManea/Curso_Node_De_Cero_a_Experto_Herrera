@@ -29,8 +29,10 @@ const main = async () => {
         tareas.crearTarea(desc);
         break;
       case '2':
+        //Listar tareas OLD
+        //console.log(tareas.listadoArr);
         //Listar tareas
-        tareas.listadoCompleto();
+        tareas.listadoCompleto(tareas.listadoArr);
         break;
     }
     //guardamos la información en la bd
