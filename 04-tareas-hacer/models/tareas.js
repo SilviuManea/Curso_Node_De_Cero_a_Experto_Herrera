@@ -54,30 +54,43 @@ class Tareas {
     });
   }
 
-  /* Mi solución
-  listadoCompleto(tareasArr = []) {
-    //Ejercicio - El numero tarea En verde o rojo si está completada o no
-    //Formato   - 1. Desc tarea :: Completada | Pendiente
-    let nrTarea = 1;
-
-    tareasArr.forEach((Tarea) => {
-      //Comprobamos si la tarea se ha completado o no (mirando el campo completadoEn)
-      if (Tarea.completadoEn == null) {
-        console.log(
-          `${nrTarea}`.red + '.' + `${Tarea.desc}` + ` :: Pendiente`,
-        );
-      } else {
-        console.log(
-          `${nrTarea}`.green +
-            '.' +
-            `${Tarea.desc}` +
-            ` :: Completada`,
-        );
+  listarPendientesCompletadas(completadas) {
+    //Le pasaremos true o false según se queremos mostrar unas u otras
+    let tareasCompletadas = [];
+    let tareasPendientes = [];
+    //Separo las tareas completadas de las pendientes en arrays temporales
+    this.listadoArr.forEach((tarea) => {
+      //console.log(tarea);
+      if (completadas && tarea.completadoEn) {
+        //Añadir al array de completadas
+        tareasCompletadas.push(tarea);
+      } else if (!tarea.completadoEn) {
+        //Añadir al array de pendientes
+        tareasPendientes.push(tarea);
       }
-      nrTarea++;
     });
+    //En función del parámetro elegido en el menú muestro unas u otras:
+    if (completadas) {
+      //console.log(tareasCompletadas);
+      tareasCompletadas.forEach((TareaCompletada, i) => {
+        const { desc, completadoEn } = TareaCompletada;
+        const estado = completadoEn
+          ? 'Completada'.green
+          : 'Pendiente'.red;
+        const idxCompletadas = i + 1;
+        console.log(`${idxCompletadas} ${desc} :: ${estado}`);
+      });
+    } else {
+      tareasPendientes.forEach((TareaPendiente, i) => {
+        const { desc, completadoEn } = TareaPendiente;
+        const estado = completadoEn
+          ? 'Completada'.green
+          : 'Pendiente'.red;
+        const idxPendientes = i + 1;
+        console.log(`${idxPendientes} ${desc} :: ${estado}`);
+      });
+    }
   }
-  */
 }
 
 module.exports = Tareas;
