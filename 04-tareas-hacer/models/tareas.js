@@ -39,13 +39,26 @@ class Tareas {
     this._listado[tarea.id] = tarea;
   }
 
-  listadoCompleto(tareasArr = []) {
-    let tareasCount = 0;
-    //let _listadoCompleto = {};
-    let nrTarea = 1;
+  //Solución Tutorial
+  listadoCompleto() {
+    this.listadoArr.forEach((tarea, i) => {
+      //Inicializamos el indice a 1
+      const idx = `${i + 1}`.green;
+      //Sacamos la descripción y cuando se ha completado usando destructuración
+      const { desc, completadoEn } = tarea;
+      //logica para pintar el estado de verde o rojo según si completadoEn tiene valor nulo o no
+      const estado = completadoEn
+        ? 'Completada'.green
+        : 'Pendiente'.red;
+      console.log(`${idx} ${desc} :: ${estado}`);
+    });
+  }
 
-    tareasCount = tareasArr.length;
-    //console.log(tareasCount);
+  /* Mi solución
+  listadoCompleto(tareasArr = []) {
+    //Ejercicio - El numero tarea En verde o rojo si está completada o no
+    //Formato   - 1. Desc tarea :: Completada | Pendiente
+    let nrTarea = 1;
 
     tareasArr.forEach((Tarea) => {
       //Comprobamos si la tarea se ha completado o no (mirando el campo completadoEn)
@@ -61,12 +74,10 @@ class Tareas {
             ` :: Completada`,
         );
       }
-
       nrTarea++;
     });
-    //Ejercicio - El numero tarea En verde o rojo si está completada o no
-    //Formato   - 1. Desc tarea :: Completada | Pendiente
   }
+  */
 }
 
 module.exports = Tareas;

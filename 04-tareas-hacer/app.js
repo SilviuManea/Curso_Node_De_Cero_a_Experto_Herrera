@@ -32,7 +32,7 @@ const main = async () => {
         //Listar tareas OLD
         //console.log(tareas.listadoArr);
         //Listar tareas
-        tareas.listadoCompleto(tareas.listadoArr);
+        tareas.listadoCompleto();
         break;
     }
     //guardamos la información en la bd
