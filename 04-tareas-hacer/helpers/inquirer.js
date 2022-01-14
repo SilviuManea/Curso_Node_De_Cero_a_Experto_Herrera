@@ -87,9 +87,34 @@ const leerImput = async (message) => {
   return desc;
 };
 
+const listadoTareasBorrar = async (tareas = []) => {
+  //Queremos crear tantas choices como elementos haya en el array de tareas
+  const choices = tareas.map((tarea, i) => {
+    const idx = `${i + 1}.`.green;
+    //Al usar map devolveremos un array con value y name para cada tarea
+    return {
+      value: tarea.id,
+      name: `${idx} ${tarea.desc}`,
+    };
+  });
+  //Preparamos las preguntar para el inquirer
+  const preguntas = [
+    {
+      type: 'list',
+      name: 'id',
+      message: 'Borrar',
+      choices,
+    },
+  ];
+  //Llamamos al inquirer con las preguntas generadas arriba y devolvemos el id
+  const { id } = await inquirer.prompt(preguntas);
+  return id;
+};
+
 module.exports = {
   inquireMenu,
   //exportamos la nueva función para que podamos acceder a ella desde otra clase
   pausa,
   leerImput,
+  listadoTareasBorrar,
 };
