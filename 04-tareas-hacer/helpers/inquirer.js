@@ -97,6 +97,13 @@ const listadoTareasBorrar = async (tareas = []) => {
       name: `${idx} ${tarea.desc}`,
     };
   });
+
+  //Añadimos la opción de salir del menú de borrado(en caso de no querer borrar nada)
+  choices.unshift({
+    value: '0',
+    name: '0.'.green + ' Cancelar',
+  });
+
   //Preparamos las preguntar para el inquirer
   const preguntas = [
     {
@@ -111,10 +118,25 @@ const listadoTareasBorrar = async (tareas = []) => {
   return id;
 };
 
+//Función para confirmar el borrado de una tarea
+const confirmar = async (message) => {
+  const question = [
+    {
+      type: 'confirm',
+      name: 'ok',
+      message,
+    },
+  ];
+  // El type confirm de require devolverá un booleano en el ok
+  const { ok } = await inquirer.prompt(question);
+  return ok;
+};
+
 module.exports = {
   inquireMenu,
   //exportamos la nueva función para que podamos acceder a ella desde otra clase
   pausa,
   leerImput,
   listadoTareasBorrar,
+  confirmar,
 };
