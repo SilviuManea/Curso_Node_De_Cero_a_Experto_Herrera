@@ -132,6 +132,32 @@ const confirmar = async (message) => {
   return ok;
 };
 
+const mostrarListadoChecklist = async (tareas = []) => {
+  //Queremos crear tantas choices como elementos haya en el array de tareas
+  const choices = tareas.map((tarea, i) => {
+    const idx = `${i + 1}.`.green;
+    //Al usar map devolveremos un array con value y name para cada tarea
+    return {
+      value: tarea.id,
+      name: `${idx} ${tarea.desc}`,
+      checked: tarea.completadoEn ? true : false,
+    };
+  });
+
+  //Preparamos la pregunta para el inquirer, en este caso será un checlbox
+  const pregunta = [
+    {
+      type: 'checkbox',
+      name: 'ids',
+      message: 'Selecciones',
+      choices,
+    },
+  ];
+  //Llamamos al inquirer con las preguntas generadas arriba y devolvemos los ids
+  const { ids } = await inquirer.prompt(pregunta);
+  return ids;
+};
+
 module.exports = {
   inquireMenu,
   //exportamos la nueva función para que podamos acceder a ella desde otra clase
@@ -139,4 +165,5 @@ module.exports = {
   leerImput,
   listadoTareasBorrar,
   confirmar,
+  mostrarListadoChecklist,
 };

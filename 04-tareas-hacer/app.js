@@ -5,6 +5,7 @@ const {
   leerImput,
   listadoTareasBorrar,
   confirmar,
+  mostrarListadoChecklist,
 } = require('./helpers/inquirer');
 const Tarea = require('./models/tarea');
 const Tareas = require('./models/tareas');
@@ -41,6 +42,11 @@ const main = async () => {
       case '4':
         //Listar tareas pendientes
         tareas.listarPendientesCompletadas(false);
+        break;
+      case '5':
+        //Completado | pendiente
+        await mostrarListadoChecklist(tareas.listadoArr);
+        console.log(ids);
         break;
       case '6':
         //Borrar - importante usar el await para que no se solapen los menús
