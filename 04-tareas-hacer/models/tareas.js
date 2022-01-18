@@ -77,7 +77,9 @@ class Tareas {
         if (completadoEn) {
           contador += 1;
           console.log(
-            `${(contador + '.').green} ${desc} :: ${estado}`,
+            `${(contador + '.').green} ${desc} :: ${estado}::${
+              completadoEn.green
+            }`,
           );
         }
         //Comprobamos si la tarea está pendiente
@@ -89,6 +91,30 @@ class Tareas {
             `${(contador + '.').green} ${desc} :: ${estado}`,
           );
         }
+      }
+    });
+  }
+  //Función que marca como completadas aquellas tareas cuyo id venga en el array
+  toggleCompletadas(ids = []) {
+    //DEBUG
+    //console.log('Este es _listado', this._listado);
+    //console.log('Este es listadoArr', this.listadoArr);
+
+    //para cada id del array marcar como completada
+    ids.forEach((id) => {
+      const tarea = this._listado[id];
+      if (!tarea.completadoEn) {
+        tarea.completadoEn = new Date().toISOString();
+      }
+    });
+
+    //para cada tarea cuyo id no venga en el arreglo de ids, las marcaremos como pendientes
+    this.listadoArr.forEach((tarea) => {
+      //nos traemos todos los ids de las tareas disponibles
+      //comprobamos que el id de la tarea que nos traemos no está en el aray ids[]
+      if (!ids.includes(tarea.id)) {
+        //conseguimos la tarea que queremos dejar como pendiente y le ponemos la propiedad a null
+        this._listado[tarea.id].completadoEn = null;
       }
     });
   }
