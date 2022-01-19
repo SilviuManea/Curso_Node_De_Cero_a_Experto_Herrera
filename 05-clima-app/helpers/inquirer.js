@@ -1,0 +1,169 @@
+const inquirer = require('inquirer');
+
+require('colors');
+
+const preguntas = [
+  {
+    name: 'opcion',
+    message: '¿Que desea hacer?',
+    type: 'list',
+    choices: [
+      {
+        value: '1',
+        name: `${'1.'.green} Crear tarea`,
+      },
+      {
+        value: '2',
+        name: `${'2.'.green} Listar tareas`,
+      },
+
+      {
+        value: '3',
+        name: `${'3.'.green} Listar tareas completadas`,
+      },
+
+      {
+        value: '4',
+        name: `${'4.'.green} Listar tareas pendientes`,
+      },
+
+      {
+        value: '5',
+        name: `${'5.'.green} Completar tarea(s)`,
+      },
+
+      {
+        value: '6',
+        name: `${'6.'.green} Borrar tarea`,
+      },
+
+      {
+        value: '0',
+        name: `${'0.'.green} Salir`,
+      },
+    ],
+  },
+];
+
+const inquireMenu = async () => {
+  console.clear();
+  console.log('========================'.green);
+  console.log(' Seleccione una opción  '.white);
+  console.log('========================\n'.green);
+
+  const { opcion } = await inquirer.prompt([preguntas[0]]);
+  return opcion;
+};
+
+//Ejercicio
+const pausa = async () => {
+  const question = [
+    {
+      type: 'input',
+      name: 'enter',
+      message: `Presione ${'enter'.green} para continuar`,
+    },
+  ];
+  console.log(`\n`);
+  await inquirer.prompt(question);
+};
+
+const leerImput = async (message) => {
+  const question = [
+    {
+      type: 'input',
+      name: 'desc',
+      message,
+      validate(value) {
+        if (value.length === 0) {
+          return 'Por favor ingrese un valor';
+        }
+        return true;
+      },
+    },
+  ];
+  // {desc} es lo que vamos a guardar en esta variable(porque ya conocemos que tiene una propiedad desc.)
+  const { desc } = await inquirer.prompt(question);
+  return desc;
+};
+
+const listadoTareasBorrar = async (tareas = []) => {
+  //Queremos crear tantas choices como elementos haya en el array de tareas
+  const choices = tareas.map((tarea, i) => {
+    const idx = `${i + 1}.`.green;
+    //Al usar map devolveremos un array con value y name para cada tarea
+    return {
+      value: tarea.id,
+      name: `${idx} ${tarea.desc}`,
+    };
+  });
+
+  //Añadimos la opción de salir del menú de borrado(en caso de no querer borrar nada)
+  choices.unshift({
+    value: '0',
+    name: '0.'.green + ' Cancelar',
+  });
+
+  //Preparamos las preguntar para el inquirer
+  const preguntas = [
+    {
+      type: 'list',
+      name: 'id',
+      message: 'Borrar',
+      choices,
+    },
+  ];
+  //Llamamos al inquirer con las preguntas generadas arriba y devolvemos el id
+  const { id } = await inquirer.prompt(preguntas);
+  return id;
+};
+
+//Función para confirmar el borrado de una tarea
+const confirmar = async (message) => {
+  const question = [
+    {
+      type: 'confirm',
+      name: 'ok',
+      message,
+    },
+  ];
+  // El type confirm de require devolverá un booleano en el ok
+  const { ok } = await inquirer.prompt(question);
+  return ok;
+};
+
+const mostrarListadoChecklist = async (tareas = []) => {
+  //Queremos crear tantas choices como elementos haya en el array de tareas
+  const choices = tareas.map((tarea, i) => {
+    const idx = `${i + 1}.`.green;
+    //Al usar map devolveremos un array con value y name para cada tarea
+    return {
+      value: tarea.id,
+      name: `${idx} ${tarea.desc}`,
+      checked: tarea.completadoEn ? true : false,
+    };
+  });
+
+  //Preparamos la pregunta para el inquirer, en este caso será un checlbox
+  const pregunta = [
+    {
+      type: 'checkbox',
+      name: 'ids',
+      message: 'Selecciones',
+      choices,
+    },
+  ];
+  //Llamamos al inquirer con las preguntas generadas arriba y devolvemos los ids
+  const { ids } = await inquirer.prompt(pregunta);
+  return ids;
+};
+
+module.exports = {
+  inquireMenu,
+  //exportamos la nueva función para que podamos acceder a ella desde otra clase
+  pausa,
+  leerImput,
+  listadoTareasBorrar,
+  confirmar,
+  mostrarListadoChecklist,
+};
