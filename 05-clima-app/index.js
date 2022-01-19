@@ -1,8 +1,11 @@
 const { leerImput } = require('./helpers/inquirer');
 const { inquireMenu, pausa } = require('./helpers/inquirer');
+const Busquedas = require('./models/busquedas');
 
 const main = async () => {
-  //console.log('Hola Mundo');
+  //Instanciamos busquedas
+  const busquedas = new Busquedas();
+
   let opt = '';
 
   do {
@@ -10,8 +13,25 @@ const main = async () => {
 
     switch (opt) {
       case 1:
-        const desc1 = await leerImput('Descripción 1:');
-        console.log(desc1);
+        //Mostrar mensaje
+        const lugar = await leerImput('Ciudad: ');
+        console.log(lugar);
+        //Buscar los lugares
+
+        //Seleccionar el lugar
+
+        //Clima
+
+        //Mostrar resultados
+
+        console.log('\nInformación de la ciudad\n'.green);
+        console.log('Ciudad:');
+        console.log('Lat:');
+        console.log('Lng:');
+        console.log('Temperatura:');
+        console.log('Mínima:');
+        console.log('Máxima:');
+
         break;
       case 2:
         const desc2 = await leerImput('Descripción 2:');
