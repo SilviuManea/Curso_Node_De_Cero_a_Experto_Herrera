@@ -15,3 +15,16 @@ Para pruebas rápidas del endpoint
 https://reqres.in/
 
 ---
+
+## Clase72
+
+Enlaces para la próxima clase
+Enlaces:
+
+Por favor abran y tengan a la mano los siguientes enlaces que necesitaremos:
+
+https://www.mapbox.com/
+
+https://docs.mapbox.com/api/search/geocoding/
+
+---
