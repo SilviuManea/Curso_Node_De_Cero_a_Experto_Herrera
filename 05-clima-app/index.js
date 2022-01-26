@@ -3,7 +3,7 @@ const { leerImput } = require('./helpers/inquirer');
 const { inquireMenu, pausa } = require('./helpers/inquirer');
 const Busquedas = require('./models/busquedas');
 
-console.log(process.env.MAPBOX_KEY);
+//console.log(process.env.MAPBOX_KEY);
 
 const main = async () => {
   //Instanciamos busquedas
@@ -45,4 +45,4 @@ const main = async () => {
   } while (opt !== 0);
 };
 
-//main();
+main();
