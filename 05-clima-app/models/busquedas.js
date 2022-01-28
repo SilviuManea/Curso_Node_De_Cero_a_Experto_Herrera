@@ -23,8 +23,15 @@ class Busquedas {
         params: this.paramsMapbox,
       });
       const resp = await instance.get();
-      console.log(resp.data);
-      return []; //retornar los lugares que coincidan con la busqueda en curso
+      //console.log(resp.data.features);
+      return resp.data.features.map((lugar) => ({
+        id: lugar.id,
+        nombre: lugar.place_name,
+        //longitud es la primera posición del array center(esto en mapbox,en google maps sería al revés)
+        lng: lugar.center[0],
+        //latitud es la segunda posición del array center(esto en mapbox,en google maps sería al revés)
+        lat: lugar.center[1],
+      }));
     } catch (error) {
       console.log(error);
       return [];

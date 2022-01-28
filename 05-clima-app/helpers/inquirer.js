@@ -66,19 +66,22 @@ const leerImput = async (message) => {
   const { desc } = await inquirer.prompt(question);
   return desc;
 };
-
-const listadoTareasBorrar = async (tareas = []) => {
-  //Queremos crear tantas choices como elementos haya en el array de tareas
-  const choices = tareas.map((tarea, i) => {
+/**
+ * @param {any} lugares
+ * Devuelve una lista de lugares
+ */
+const listarLugares = async (lugares = []) => {
+  //Queremos crear tantas choices como elementos haya en el array de lugares
+  const choices = lugares.map((lugar, i) => {
     const idx = `${i + 1}.`.green;
-    //Al usar map devolveremos un array con value y name para cada tarea
+    //Al usar map devolveremos un array con value y name para cada lugar
     return {
-      value: tarea.id,
-      name: `${idx} ${tarea.desc}`,
+      value: lugar.id, //el valor a asociar a este elemento será su id
+      name: `${idx} ${lugar.nombre}`, //el nombre a asociar a este elemento será su nombre y el idx de lista
     };
   });
 
-  //Añadimos la opción de salir del menú de borrado(en caso de no querer borrar nada)
+  //Añadimos la opción de salir del menú
   choices.unshift({
     value: '0',
     name: '0.'.green + ' Cancelar',
@@ -89,7 +92,7 @@ const listadoTareasBorrar = async (tareas = []) => {
     {
       type: 'list',
       name: 'id',
-      message: 'Borrar',
+      message: 'Seleccione lugar:',
       choices,
     },
   ];
@@ -98,6 +101,7 @@ const listadoTareasBorrar = async (tareas = []) => {
   return id;
 };
 
+/*
 //Función para confirmar el borrado de una tarea
 const confirmar = async (message) => {
   const question = [
@@ -111,7 +115,9 @@ const confirmar = async (message) => {
   const { ok } = await inquirer.prompt(question);
   return ok;
 };
+*/
 
+/*
 const mostrarListadoChecklist = async (tareas = []) => {
   //Queremos crear tantas choices como elementos haya en el array de tareas
   const choices = tareas.map((tarea, i) => {
@@ -137,13 +143,11 @@ const mostrarListadoChecklist = async (tareas = []) => {
   const { ids } = await inquirer.prompt(pregunta);
   return ids;
 };
-
+*/
 module.exports = {
-  inquireMenu,
   //exportamos la nueva función para que podamos acceder a ella desde otra clase
+  inquireMenu,
   pausa,
   leerImput,
-  listadoTareasBorrar,
-  confirmar,
-  mostrarListadoChecklist,
+  listarLugares,
 };
