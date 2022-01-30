@@ -51,18 +51,19 @@ class Busquedas {
     try {
       // instancia de axios
       const instance = axios.create({
-        baseURL: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}`,
-        params: this.paramsOpenweather,
+        baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+        //mandamos las propiedades adicionales usando destructuración
+        params: { ...this.paramsOpenweather, lat, lon },
       });
       // resp.data
       const resp = await instance.get();
-      //console.log(resp);
+      const { weather, main } = resp.data;
 
       return {
-        desc: resp.data.weather[0].description,
-        min: resp.data.main.temp_min,
-        max: resp.data.main.temp_max,
-        temp: resp.data.main.temp,
+        desc: weather[0].description,
+        min: main.temp_min,
+        max: main.temp_max,
+        temp: main.temp,
       };
     } catch (error) {
       console.log(error);

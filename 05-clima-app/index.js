@@ -42,15 +42,15 @@ const main = async () => {
         //console.log(clima);
 
         //Mostrar resultados
-
+        console.clear();
         console.log('\nInformación de la ciudad\n'.green);
-        console.log('Ciudad:', lugarSeleccionado.nombre);
+        console.log('Ciudad:', lugarSeleccionado.nombre.green);
         console.log('Lat:', lugarSeleccionado.lat);
         console.log('Lng:', lugarSeleccionado.lng);
         console.log('Temperatura:', clima.temp);
         console.log('Mínima:', clima.min);
         console.log('Máxima:', clima.max);
-        console.log('Como está el clima:', clima.desc);
+        console.log('Como está el clima:', clima.desc.green);
 
         break;
       case 2:
