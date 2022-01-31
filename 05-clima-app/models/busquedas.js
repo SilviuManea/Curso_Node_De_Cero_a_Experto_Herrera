@@ -7,7 +7,26 @@ class Busquedas {
   dbPath = './db/database.json';
 
   constructor() {
-    //TODO: leer DB si existe
+    //Leer DB si existe
+    this.leerDB();
+  }
+
+  get historialCapitalizado() {
+    //Ponemos cada palabra con la latra mayúscula al principio
+    //zamora, provincia de zamora, españa
+    //zaragoza, provincia de zaragoza, españa
+    //épila, provincia de zaragoza, españa
+
+    return this.historial.map((lugar) => {
+      //dividimos por el espacio en blanco entre palabras
+      let palabras = lugar.split(' ');
+      //de cada palabra cogemos la primera letra y la convertimos a mayuscula y le concatenamos el resto de la palabra a partir de la segunda letra
+      palabras = palabras.map(
+        (p) => p[0].toUpperCase() + p.substring(1),
+      );
+      //devolvemos las palabras capitalizadas juntándolas con un espacio en blanco
+      return palabras.join(' ');
+    });
   }
 
   get paramsMapbox() {
@@ -94,7 +113,24 @@ class Busquedas {
     fs.writeFileSync(this.dbPath, JSON.stringify(payload));
   }
 
-  leerDB() {}
+  leerDB() {
+    // Comprobar si existe
+    if (fs.existsSync(this.dbPath)) {
+      const info = fs.readFileSync(this.dbPath, {
+        encoding: 'utf-8',
+      });
+
+      const data = JSON.parse(info);
+
+      this.historial = data.historial;
+
+      console.log(this.historial);
+    } else {
+      console.log(
+        'No se encuentra una bd de historico anterior a esta búsqueda',
+      );
+    }
+  }
 }
 
 module.exports = Busquedas;
