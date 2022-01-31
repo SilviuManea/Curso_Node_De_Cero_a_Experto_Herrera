@@ -99,6 +99,8 @@ class Busquedas {
     if (this.historial.includes(lugar.toLocaleLowerCase())) {
       return; //no hacemos nada porque ya existe
     }
+    //Limitamos el número de elementos que muestra el historial a los ultimos 6 resultados.
+    this.historial = this.historial.splice(0, 5);
     //Si no existe el lugar, lo añadimos en minúsculas.
     this.historial.unshift(lugar.toLocaleLowerCase());
 
