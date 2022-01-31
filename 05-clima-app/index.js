@@ -28,11 +28,16 @@ const main = async () => {
 
         //Seleccionar el lugar
         const idSeleccionado = await listarLugares(lugares);
-        //console.log(idSeleccionado);
+        //Controlar que el id seleccionado no sea 0 (con 0 se sale de la busqueda de ciudades.)
+        if (idSeleccionado === '0') continue; //si el usuario elige cancelar que se salte el código hasta el break
+
         const lugarSeleccionado = lugares.find(
           (lugar) => lugar.id === idSeleccionado,
         );
         //console.log(lugarSeleccionado);
+
+        //Guardar en DB el lugar seleccionado para la función de Historial
+        busquedas.agregarHistorial(lugarSeleccionado.nombre);
 
         //Clima
         const clima = await busquedas.climaLugar(
@@ -54,8 +59,10 @@ const main = async () => {
 
         break;
       case 2:
-        const desc2 = await leerImput('Descripción 2:');
-        console.log(desc2);
+        busquedas.historial.forEach((lugar, i) => {
+          const idx = `${i + 1}.`.green;
+          console.log(`${idx} ${lugar}`);
+        });
         break;
     }
     await pausa();
