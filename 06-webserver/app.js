@@ -1,18 +1,19 @@
-const http = require('http');
+const express = require('express');
+const app = express();
+const port = 8080;
 
-http
-  .createServer((req, res) => {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
+app.get('/', (req, res) => {
+  res.send('Home page');
+});
 
-    const persona = {
-      id: 1,
-      nombre: 'Silviu',
-    };
+app.get('/hola-mundo', (req, res) => {
+  res.send('Hola mundo en su respectiva ruta');
+});
 
-    //Habría que parsear el json a string suando stringify
-    res.write(JSON.stringify(persona));
-    res.end();
-  })
-  .listen(8080);
+app.get('*', (req, res) => {
+  res.send('404 | Page not found');
+});
 
-console.log('Escuchando el puerto:', 8080);
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
