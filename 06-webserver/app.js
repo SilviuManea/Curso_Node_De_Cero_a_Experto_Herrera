@@ -17,28 +17,28 @@ hbs.registerPartials(
 app.use(express.static('public'));
 
 // Home
-app.get('/', (req, res) => {
-  res.render('home', {
-    nombre: 'Silviu Manea Hamzau',
-    titulo: 'Curso de node',
-  });
-});
+// app.get('/', (req, res) => {
+//   res.render('home', {
+//     nombre: 'Silviu Manea Hamzau',
+//     titulo: 'Curso de node',
+//   });
+// });
 
 // Generic
-app.get('/generic', (req, res) => {
-  res.render('generic', {
-    nombre: 'Silviu Manea Hamzau',
-    titulo: 'Curso de node',
-  });
-});
+// app.get('/generic', (req, res) => {
+//   res.render('generic', {
+//     nombre: 'Silviu Manea Hamzau',
+//     titulo: 'Curso de node',
+//   });
+// });
 
 // Elements
-app.get('/elements', (req, res) => {
-  res.render('elements', {
-    nombre: 'Silviu Manea Hamzau',
-    titulo: 'Curso de node',
-  });
-});
+// app.get('/elements', (req, res) => {
+//   res.render('elements', {
+//     nombre: 'Silviu Manea Hamzau',
+//     titulo: 'Curso de node',
+//   });
+// });
 
 // app.get('/hola-mundo', (req, res) => {
 //   res.send('Hola mundo en su respectiva ruta');
@@ -53,7 +53,7 @@ app.get('/elements', (req, res) => {
 // });
 
 app.get('*', (req, res) => {
-  res.sendFile(__dirname + '/public/404.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 app.listen(port, () => {
