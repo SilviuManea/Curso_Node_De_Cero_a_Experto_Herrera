@@ -1,9 +1,21 @@
 const { response } = require('express');
 
-const usuariosGet = (req, res = response) => {
+const usuariosGet = (req = request, res = response) => {
+  const {
+    q,
+    nombre = 'No name',
+    apikey,
+    page = 1,
+    limit,
+  } = req.query;
   //res.status(404).json({
   res.json({
     msg: 'get API - controlador',
+    q,
+    nombre,
+    apikey,
+    page,
+    limit,
   });
 };
 
@@ -19,8 +31,12 @@ const usuariosPost = (req, res = response) => {
 };
 
 const usuariosPut = (req, res = response) => {
+  // const id = req.params.id; //Recogiendo solo el id
+  const { id } = req.params; // Destructurando todos los params
+
   res.json({
     msg: 'put API - controlador',
+    id,
   });
 };
 
