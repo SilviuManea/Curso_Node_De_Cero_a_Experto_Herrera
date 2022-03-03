@@ -35,4 +35,4 @@ const UsuarioSchema = Schema({
 // Exportamos Usuario que será el nombre que tendrá nuestra coleccion
 // Mongoogse le Añade una s al final. Por lo que se llamará Usuarios
 
-module.export = model('Usuario', UsuarioSchema);
+module.exports = model('Usuario', UsuarioSchema);
