@@ -1,4 +1,5 @@
 const { response } = require('express');
+const bcryptjs = require('bcryptjs');
 
 // Usuario va con mayúsculas porque será una instancia del modelo, por convenio
 const Usuario = require('../models/usuario');
@@ -23,9 +24,15 @@ const usuariosGet = (req = request, res = response) => {
 };
 
 const usuariosPost = async (req, res = response) => {
-  // nos guardamos el body que traiga la request
-  const body = req.body;
-  const usuario = new Usuario(body); // asignamos los campos del body al usuario
+  // nos guardamos aquellos campos que nos interesa
+  const { nombre, correo, password, rol } = req.body;
+  const usuario = new Usuario({ nombre, correo, password, rol }); // asignamos los campos del body al usuario
+  // Verificar si el correo existe
+
+  // Encriptar la contraseña
+  const salt = bcryptjs.genSaltSync(); // generamos el salt
+  usuario.password = bcryptjs.hashSync(password, salt); // encriptamos la pass
+
   // guardamos el objeto en bd
   await usuario.save();
   res.json({
