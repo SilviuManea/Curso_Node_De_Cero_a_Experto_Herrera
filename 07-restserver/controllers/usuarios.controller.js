@@ -3,6 +3,7 @@ const bcryptjs = require('bcryptjs');
 
 // Usuario va con mayúsculas porque será una instancia del modelo, por convenio
 const Usuario = require('../models/usuario');
+const { validationResult } = require('express-validator');
 
 const usuariosGet = (req = request, res = response) => {
   const {
@@ -24,10 +25,22 @@ const usuariosGet = (req = request, res = response) => {
 };
 
 const usuariosPost = async (req, res = response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors);
+  }
+
   // nos guardamos aquellos campos que nos interesa
   const { nombre, correo, password, rol } = req.body;
   const usuario = new Usuario({ nombre, correo, password, rol }); // asignamos los campos del body al usuario
+
   // Verificar si el correo existe
+  const existeEmail = await Usuario.findOne({ correo });
+  if (existeEmail) {
+    return res.status(400).json({
+      msg: 'Ese correo ya está registrado',
+    });
+  }
 
   // Encriptar la contraseña
   const salt = bcryptjs.genSaltSync(); // generamos el salt
