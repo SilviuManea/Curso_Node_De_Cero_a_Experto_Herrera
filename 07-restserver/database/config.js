@@ -7,6 +7,7 @@ const dbConnection = async () => {
       useUnifiedTopology: true,
       //   useCreateIndex: false,
       //   useFindAndModify: false,
+      dbName: 'cafeDB'
     });
     console.log('Base de datos online.');
   } catch (error) {
