@@ -10,7 +10,10 @@ const {
   usuariosPatch,
 } = require('../controllers/usuarios.controller');
 const { validarCampos } = require('../middlewares/validar-campos');
-const { esRoleValido } = require('../helpers/db-validators');
+const {
+  esRoleValido,
+  emailExiste,
+} = require('../helpers/db-validators');
 
 const router = Router();
 
@@ -25,6 +28,7 @@ router.post(
       'El password debe de ser más de 6 letras',
     ).isLength({ min: 6 }),
     check('correo', 'El correo no es válido').isEmail(),
+    check('correo').custom(emailExiste),
     check('rol').custom(esRoleValido),
     validarCampos,
   ],
