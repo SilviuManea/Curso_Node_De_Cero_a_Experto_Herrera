@@ -43,7 +43,7 @@ const usuariosPost = async (req, res = response) => {
 const usuariosPut = async (req, res = response) => {
   // const id = req.params.id; //Recogiendo solo el id
   const { id } = req.params; // Destructurando todos los params
-  const { password, google, correo, ...resto } = req.body; // EXTRAEMOS las distintas propiedades del body
+  const { _id, password, google, correo, ...resto } = req.body; // EXTRAEMOS las distintas propiedades del body
 
   //TODO: validar contra BD
   if (password) {
@@ -58,6 +58,7 @@ const usuariosPut = async (req, res = response) => {
   res.json({
     msg: 'put API - controlador',
     id,
+    usuario,
   });
 };
 
