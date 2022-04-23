@@ -4,23 +4,16 @@ const bcryptjs = require('bcryptjs');
 // Usuario va con mayúsculas porque será una instancia del modelo, por convenio
 const Usuario = require('../models/usuario');
 
-const usuariosGet = (req = request, res = response) => {
-  const {
-    q,
-    nombre = 'No name',
-    apikey,
-    page = 1,
-    limit,
-  } = req.query;
-  //res.status(404).json({
-  res.json({
-    msg: 'get API - controlador',
-    q,
-    nombre,
-    apikey,
-    page,
-    limit,
-  });
+const usuariosGet = async (req = request, res = response) => {
+  /*
+  const {q,nombre = 'No name',apikey,page = 1,limit,} = req.query;
+  */
+  const { limite = 5, desde = 0 } = req.query; // esto extrae el valor del limite de la request si viene, y si no será 5 por defecto
+  const usuarios = await Usuario.find()
+    .skip(Number(desde))
+    .limit(Number(limite));
+
+  res.json(usuarios);
 };
 
 const usuariosPost = async (req, res = response) => {
@@ -55,11 +48,7 @@ const usuariosPut = async (req, res = response) => {
   //Update user(con el resto de campos)
   const usuario = await Usuario.findByIdAndUpdate(id, resto); // si encuentra usuario con ese id actualiza el resto de campos que nos vengan en el body
 
-  res.json({
-    msg: 'put API - controlador',
-    id,
-    usuario,
-  });
+  res.json(usuario);
 };
 
 const usuariosPatch = (req, res = response) => {
