@@ -40,9 +40,20 @@ const usuariosPost = async (req, res = response) => {
   });
 };
 
-const usuariosPut = (req, res = response) => {
+const usuariosPut = async (req, res = response) => {
   // const id = req.params.id; //Recogiendo solo el id
   const { id } = req.params; // Destructurando todos los params
+  const { password, google, correo, ...resto } = req.body; // EXTRAEMOS las distintas propiedades del body
+
+  //TODO: validar contra BD
+  if (password) {
+    //si nos viene la passw es que el user quiere actualizarla
+    // Encriptar la contraseña
+    const salt = bcryptjs.genSaltSync(); // generamos el salt
+    resto.password = bcryptjs.hashSync(password, salt); // encriptamos la pass
+  }
+  //Update user(con el resto de campos)
+  const usuario = await Usuario.findByIdAndUpdate(id, resto); // si encuentra usuario con ese id actualiza el resto de campos que nos vengan en el body
 
   res.json({
     msg: 'put API - controlador',
