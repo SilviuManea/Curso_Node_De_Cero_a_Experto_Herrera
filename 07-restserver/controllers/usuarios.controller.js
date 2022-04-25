@@ -9,11 +9,13 @@ const usuariosGet = async (req = request, res = response) => {
   const {q,nombre = 'No name',apikey,page = 1,limit,} = req.query;
   */
   const { limite = 5, desde = 0 } = req.query; // esto extrae el valor del limite de la request si viene, y si no será 5 por defecto
-  const usuarios = await Usuario.find()
+  const query = {estado:true};
+
+  const usuarios = await Usuario.find( query ) // de aquellos usuarios cuyo estado sea true
     .skip(Number(desde))
     .limit(Number(limite));
-
-  res.json(usuarios);
+  const total = await Usuario.countDocuments( query );
+  res.json({total,usuarios});
 };
 
 const usuariosPost = async (req, res = response) => {
