@@ -17,14 +17,14 @@ const usuariosGet = async (req = request, res = response) => {
 // const total = await Usuario.countDocuments( query );
 
 // Usando promise al
-  const resp = await Promise.all([
-    Usuario.find( query ) 
+  const [total, usuarios] = await Promise.all([
+    Usuario.countDocuments( query ),
+    Usuario.find( query )
     .skip(Number(desde))
-    .limit(Number(limite)),
-    Usuario.countDocuments( query )
+    .limit(Number(limite))
   ]);
 
-  res.json(resp);
+  res.json({total,usuarios});
 };
 
 const usuariosPost = async (req, res = response) => {
