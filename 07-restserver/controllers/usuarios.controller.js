@@ -11,11 +11,20 @@ const usuariosGet = async (req = request, res = response) => {
   const { limite = 5, desde = 0 } = req.query; // esto extrae el valor del limite de la request si viene, y si no será 5 por defecto
   const query = {estado:true};
 
-  const usuarios = await Usuario.find( query ) // de aquellos usuarios cuyo estado sea true
+// const usuarios = await Usuario.find( query ) // de aquellos usuarios cuyo estado sea true
+// .skip(Number(desde))
+// .limit(Number(limite));
+// const total = await Usuario.countDocuments( query );
+
+// Usando promise al
+  const resp = await Promise.all([
+    Usuario.find( query ) 
     .skip(Number(desde))
-    .limit(Number(limite));
-  const total = await Usuario.countDocuments( query );
-  res.json({total,usuarios});
+    .limit(Number(limite)),
+    Usuario.countDocuments( query )
+  ]);
+
+  res.json(resp);
 };
 
 const usuariosPost = async (req, res = response) => {
