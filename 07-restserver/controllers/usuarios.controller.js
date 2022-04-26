@@ -72,11 +72,13 @@ const usuariosDelete = async (req, res = response) => {
 
   const { id } = req.params;
   console.log(id);
-  
-  // Fisicamente lo borramos de la BD ( el objeto )
-  const usuario = await Usuario.findByIdAndDelete(id);
-  res.json(usuario);
 
+  // Con esto lo borramos de la BD ( el objeto )
+  // const usuario = await Usuario.findByIdAndDelete(id);
+
+  // Con esto lo actualizamos.
+  const usuario = await Usuario.findByIdAndUpdate( id, { estado:false } );
+  res.json(usuario);
 };
 
 module.exports = {
