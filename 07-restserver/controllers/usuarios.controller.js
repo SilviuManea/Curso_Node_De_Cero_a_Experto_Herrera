@@ -71,14 +71,16 @@ const usuariosPatch = (req, res = response) => {
 const usuariosDelete = async (req, res = response) => {
 
   const { id } = req.params;
-  console.log(id);
+  // console.log(id);
+
+  const uid = req.uid;
 
   // Con esto lo borramos de la BD ( el objeto )
   // const usuario = await Usuario.findByIdAndDelete(id);
 
   // Con esto lo actualizamos.
   const usuario = await Usuario.findByIdAndUpdate( id, { estado:false } );
-  res.json(usuario);
+  res.json({usuario,uid}); // <--UID Lo sacamos de la request
 };
 
 module.exports = {

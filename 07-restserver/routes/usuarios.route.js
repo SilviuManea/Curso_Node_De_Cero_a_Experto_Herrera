@@ -15,6 +15,7 @@ const {
   emailExiste,
   existeUsuarioPorId,
 } = require('../helpers/db-validators');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = Router();
 
@@ -50,6 +51,7 @@ router.put(
 router.patch('/', usuariosPatch);
 
 router.delete('/:id',[
+  validarJWT,
   check('id', 'No es un ID válido.').isMongoId(),
   check('id').custom(existeUsuarioPorId),
   validarCampos
