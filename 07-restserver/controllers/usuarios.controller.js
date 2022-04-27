@@ -9,22 +9,20 @@ const usuariosGet = async (req = request, res = response) => {
   const {q,nombre = 'No name',apikey,page = 1,limit,} = req.query;
   */
   const { limite = 5, desde = 0 } = req.query; // esto extrae el valor del limite de la request si viene, y si no será 5 por defecto
-  const query = {estado:true};
+  const query = { estado: true };
 
-// const usuarios = await Usuario.find( query ) // de aquellos usuarios cuyo estado sea true
-// .skip(Number(desde))
-// .limit(Number(limite));
-// const total = await Usuario.countDocuments( query );
+  // const usuarios = await Usuario.find( query ) // de aquellos usuarios cuyo estado sea true
+  // .skip(Number(desde))
+  // .limit(Number(limite));
+  // const total = await Usuario.countDocuments( query );
 
-// Usando promise al
+  // Usando promise al
   const [total, usuarios] = await Promise.all([
-    Usuario.countDocuments( query ),
-    Usuario.find( query )
-    .skip(Number(desde))
-    .limit(Number(limite))
+    Usuario.countDocuments(query),
+    Usuario.find(query).skip(Number(desde)).limit(Number(limite)),
   ]);
 
-  res.json({total,usuarios});
+  res.json({ total, usuarios });
 };
 
 const usuariosPost = async (req, res = response) => {
@@ -69,16 +67,17 @@ const usuariosPatch = (req, res = response) => {
 };
 
 const usuariosDelete = async (req, res = response) => {
-
   const { id } = req.params;
 
   // const uid = req.uid;
 
-  const usuarioBorrado = await Usuario.findByIdAndUpdate( id, { estado:false } );// borramos el que nos venga por ID desde el front
-  
+  const usuarioBorrado = await Usuario.findByIdAndUpdate(id, {
+    estado: false,
+  }); // borramos el que nos venga por ID desde el front
+
   // const usuarioAutenticado = await req.usuario; // asignamos el que nos dé el validar-jwt.js
 
-  res.json({usuarioBorrado});
+  res.json({ usuarioBorrado });
 };
 
 module.exports = {
