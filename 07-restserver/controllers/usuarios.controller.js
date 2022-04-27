@@ -71,16 +71,14 @@ const usuariosPatch = (req, res = response) => {
 const usuariosDelete = async (req, res = response) => {
 
   const { id } = req.params;
-  // console.log(id);
 
-  const uid = req.uid;
+  // const uid = req.uid;
 
-  // Con esto lo borramos de la BD ( el objeto )
-  // const usuario = await Usuario.findByIdAndDelete(id);
+  const usuarioBorrado = await Usuario.findByIdAndUpdate( id, { estado:false } );// borramos el que nos venga por ID desde el front
+  
+  // const usuarioAutenticado = await req.usuario; // asignamos el que nos dé el validar-jwt.js
 
-  // Con esto lo actualizamos.
-  const usuario = await Usuario.findByIdAndUpdate( id, { estado:false } );
-  res.json({usuario,uid}); // <--UID Lo sacamos de la request
+  res.json({usuarioBorrado});
 };
 
 module.exports = {
