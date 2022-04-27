@@ -20,6 +20,29 @@ const esAdminRole = (req, res = response, next) => {
   next();
 };
 
+const tieneRole = (...roles) => {
+  return (req, res = response, next) => {
+    //console.log(roles, req.usuario.rol);
+
+    // deberíamos disponer del usuario en la request tras haber validado el jwt
+    if (!req.usuario) {
+      // si por lo que sea la request no tuviera un usuario
+      return res.status(500).json({
+        msg: 'Se quiere verificar el role sin validar el token primero.',
+      });
+    }
+
+    if (!roles.includes(req.usuario.rol)) {
+      return res.status(401).json({
+        msg: `El servicio requiere uno de estos roles ${roles}`,
+      });
+    }
+
+    next();
+  };
+};
+
 module.exports = {
   esAdminRole,
+  tieneRole,
 };
