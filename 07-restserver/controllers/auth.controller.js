@@ -54,15 +54,43 @@ const googleSignIn = async (req, res = response) => {
   const { id_token } = req.body;
 
   try {
-    const googleUser = await googleVerify(id_token);
-    console.log(googleUser);
+    const { correo, nombre, img } = await googleVerify(id_token);
 
+    let usuario = await Usuario.findOne({ correo });
+
+    if (!usuario) {
+      // Tengo que crearlo pasándole los parámetros que requiere nuestro modelo del usuario
+      const data = {
+        nombre,
+        correo,
+        password: ':P',
+        img,
+        google: true,
+        rol: 'USER_ROLE',
+        estado: true,
+      };
+      usuario = new Usuario(data);
+      await usuario.save();
+      console.log('Nuevo usuario creado');
+    }
+
+    // Si el usuario en DB pero estado a false(es que lo hemos dado de baja o está desactivado)
+    if (!usuario.estado) {
+      console.log('Usuario Bloqueado');
+      return res.status(401).json({
+        msg: 'Hable con el administrador,usuario bloqueado',
+      });
+    }
+
+    // Generar el JWT si el usuario existe y está validado(ha pasado los checks anteriores)
+    const token = await generarJWT(usuario.id); //generarJWT es una función nuestra
+    console.log('Usuario activo');
     res.json({
       msg: 'Todo bien!',
-      id_token,
+      token, //ojo esto es el token de jwt que se genera en base al id de usuario de mongo que hemos encontrado y está activo y validado
     });
   } catch (error) {
-    json.status(400).json({
+    return res.status(400).json({
       ok: false,
       msg: 'El token no se pudo verificar',
     });
