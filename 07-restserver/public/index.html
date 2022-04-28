@@ -31,7 +31,20 @@
     <script>
       function handleCredentialResponse(response) {
          //Google Token : ID_TOKEN
-         console.log('id_token', response.credential);
+         //console.log('id_token', response.credential);
+         const body={id_token:response.credential};// token que viene de google y que mandaremos bajo id_token
+
+         fetch('http://localhost:8080/api/auth/google',{
+           method:'POST',
+           headers:{
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify(body)// para poder mandar el id_token via fetch tenemos que serializarlo
+         })
+              .then(resp => resp.json())// readable string que tenemos que abrir
+              .then(resp => {
+                console.log(resp) // consola que el backend va a regresar  - este console log lo veremos en el front
+              }).catch(console.warn);
       }
     </script>
 
