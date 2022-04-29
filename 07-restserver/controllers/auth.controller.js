@@ -87,6 +87,7 @@ const googleSignIn = async (req, res = response) => {
     console.log('Usuario activo');
     res.json({
       msg: 'Todo bien!',
+      usuario,
       token, //ojo esto es el token de jwt que se genera en base al id de usuario de mongo que hemos encontrado y está activo y validado
     });
   } catch (error) {

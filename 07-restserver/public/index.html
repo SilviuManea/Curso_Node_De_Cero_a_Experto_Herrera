@@ -14,8 +14,10 @@
     <hr>
     <div id="g_id_onload"
          data-client_id="1311477318-2mstrcrqrbn1l2gni19e86rkq3ljio1a.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse"
          data-auto_prompt="false"
-         data-callback="handleCredentialResponse">
+         data-auto_select="true"
+         >
       </div>
       <div class="g_id_signin"
          data-type="standard"
@@ -25,6 +27,10 @@
          data-shape="rectangular"
          data-logo_alignment="left">
       </div>
+
+    <button id="google_signout">
+        Signout
+    </button>
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
@@ -41,11 +47,28 @@
            },
            body: JSON.stringify(body)// para poder mandar el id_token via fetch tenemos que serializarlo
          })
-              .then(resp => resp.json())// readable string que tenemos que abrir
+              .then(r => r.json())// readable string que tenemos que abrir
               .then(resp => {
                 console.log(resp) // consola que el backend va a regresar  - este console log lo veremos en el front
+                localStorage.setItem('email',resp.usuario.correo) // guardamos el correo del user autenticado en el local storage.Necesario para el logout
               }).catch(console.warn);
       }
+
+      const button = document.getElementById('google_signout');
+      button.onclick = () => {
+
+        console.log(google.accounts.id)
+        
+        google.accounts.id.disableAutoSelect()
+
+        // Hacemos Logout usando 
+        google.accounts.id.revoke(localStorage.getItem('email'),done =>{
+          localStorage.clear();
+          location.reload();
+        })
+
+      }
+
     </script>
 
   </body>
