@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express, { Application } from 'express';
 import userRoutes from '../routes/usuario.route';
 
@@ -12,8 +13,25 @@ class Server {
     constructor(){
         this.app = express();
         this.port = process.env.PORT || '8000' // Se pone por defecto el 8000 porque this.port no puede ser undefined
+        // Habilitar el middleware
+        this.middlewares();
         // Definir mis rutas y habilitarlas
         this.routes();
+    }
+
+    // TODO:COnectar la base de datos
+
+    middlewares() {
+
+        // CORS
+        this.app.use(cors());
+
+        // Lectura del body
+        this.app.use(express.json()); // Express va a parsearnos a json lo que venga en el body
+
+        // Carpeta pública
+        this.app.use(express.static('public'));
+
     }
 
     routes(){

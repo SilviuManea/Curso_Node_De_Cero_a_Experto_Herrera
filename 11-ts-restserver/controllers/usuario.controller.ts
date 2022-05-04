@@ -21,10 +21,11 @@ export const getUsuarioById = (req:Request ,res:Response) =>{
 export const postUsuario = (req:Request ,res:Response) =>{
 
     const {body} = req;
+    console.log(body)
 
     res.json({
         msg:'postUsuario',
-        body
+        body,
     })
 }
 // Actualizar usuario por ID
